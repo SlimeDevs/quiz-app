@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="styles/main.css">
+		<title>Programming Quiz</title>
+	</head>
+	<body>
+		<div class="quiz-welcome">
+			<h1>Programming Quiz</h1>
+			<p>This is a quiz to test your knowledge on basic programming trivia.</p>
+			<button class="quiz-start-button">Start</button>
+		</div>
+
+		<div class="quiz-questions">
+			<h3 class="question-number">Question: 0/0</h3>
+			<h3 class="question-correct">Correct: 0/0</h3>
+			<h4 class="question-title"></h4>
+			<form id="question-form" name="Quiz Question">
+				<ol class="question-choices"></ol>
+				<button type="submit">Submit</button>
+				<button class="question-restart">Restart</button>
+			</form>
+		</div>
+
+		<div class="quiz-answer"></div>
+		<div class="quiz-final"></div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
