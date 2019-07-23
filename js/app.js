@@ -1,3 +1,23 @@
+class Quiz {
+	constructor() {
+		this.questions = [];
+		this.currentQuestion = 0;
+		this.score = 0;
+	};
+
+	// Checks if a provided answer is correct, and increments score if it is
+	checkCorrect(answerID) {
+		const questionToCheck = this.questions[this.currentQuestion];
+		const questionIndex = answerID - 1;
+
+		if (questionToCheck.correctAnswerIndex === questionIndex) {
+			this.score++;
+		} else {
+			return;
+		};
+	};
+};
+
 const quizQuestions = [
 	{
 		"text": "What Programming Language is used for web page Structure?",
@@ -51,27 +71,9 @@ const quizQuestions = [
 	}
 ];
 
-class Quiz {
-	constructor() {
-		this.questions = [];
-		this.currentQuestion = 0;
-		this.score = 0;
-	};
+let quiz = new Quiz;
 
-	// Checks if a provided answer is correct, and increments score if it is
-	checkCorrect(answerID) {
-		const questionToCheck = this.questions[this.currentQuestion];
-		const questionIndex = answerID - 1;
-
-		if (questionToCheck.correctAnswerIndex === questionIndex) {
-			this.score++;
-		} else {
-			return;
-		};
-	};
-};
-
-function nextQuestion(quiz, answer) {
+function nextQuestion(answer) {
 	
 	if (quiz.currentQuestion > 0) {
 		quiz.checkCorrect(answer)
@@ -88,21 +90,22 @@ function nextQuestion(quiz, answer) {
 	$('.question-title').text(`${currentQuestion.text}`);
 	$('.question-choices').empty();
 	for (i=0; i < currentQuestion.answers.length; i++) {
-		$('.question-choices').append(currentQuestion.answers[i])
+		$('.question-choices').append(`<li>\n<input type="radio" name="user-answer" value="${i + 1}" required>\n<label>${i + 1}</label>\n</li>`)
 	};
 };
 
 function startQuiz() {
 	$('.quiz-welcome').hide();
 	$('.quiz-questions').show();
-	let codingQuiz = new Quiz;
-	codingQuiz.questions.concat(quizQuestions);
-	nextQuestion(codingQuiz);
+	quiz.questions = JSON.parse(JSON.stringify(quizQuestions));
+	console.log(quiz.questions)
+	nextQuestion(quiz);
 	// TODO: Add event listener for submit, and reset
 };
 
 $(document).ready(function() {
 	$('.quiz-start-button').click(function() {
+		
 		startQuiz();
 	});
 });
