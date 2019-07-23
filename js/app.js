@@ -14,9 +14,9 @@ class Quiz {
 			this.score++;
 		} else {
 			return;
-		};
+		}
 	};
-};
+}
 
 const quizQuestions = [
 	{
@@ -30,7 +30,7 @@ const quizQuestions = [
 		"correctAnswerIndex": 1
 	},
 	{
-		"text": "What Programming Language is used for web page Behaivor?",
+		"text": "What Programming Language is used for web page Behavior?",
 		"answers": ["HTML", "CSS", "Javascript", "C#"],
 		"correctAnswerIndex": 2
 	},
@@ -51,7 +51,7 @@ const quizQuestions = [
 	},
 	{
 		"text": "What device fits in your hand and is used for calls?",
-		"answers": ["Server", "Lightbulb", "Internet", "Phone"],
+		"answers": ["Server", "Light bulb", "Internet", "Phone"],
 		"correctAnswerIndex": 3
 	},
 	{
@@ -80,32 +80,32 @@ function nextQuestion(answer) {
 	}
 	quiz.currentQuestion++;
 	const currentQuestionNumber = quiz.currentQuestion;
-	const currentQuestion = quiz.questions[currentQuestionNumber - 1]
+	const currentQuestion = quiz.questions[currentQuestionNumber - 1];
 	const currentScore = quiz.score;
 	const totalQuestions = quiz.questions.length;
 	const answeredQuestions = totalQuestions - currentQuestionNumber - 1;
+	const questionChoicesSelector = $('.question-choices');
 
 	$('.question-number').text(`Question: ${currentQuestionNumber}/${totalQuestions}`);
 	$('.question-correct').text(`Correct: ${currentScore}/${answeredQuestions}`);
 	$('.question-title').text(`${currentQuestion.text}`);
-	$('.question-choices').empty();
-	for (i=0; i < currentQuestion.answers.length; i++) {
-		$('.question-choices').append(`<li>\n<input type="radio" name="user-answer" value="${i + 1}" required>\n<label>${i + 1}</label>\n</li>`)
-	};
-};
+	questionChoicesSelector.empty();
+	for (let i=0; i < currentQuestion.answers.length; i++) {
+		questionChoicesSelector.append(`<li>\n<input type="radio" name="user-answer" value="${i + 1}" required>\n<label>${i + 1}</label>\n</li>`)
+	}
+}
 
 function startQuiz() {
 	$('.quiz-welcome').hide();
 	$('.quiz-questions').show();
 	quiz.questions = JSON.parse(JSON.stringify(quizQuestions));
-	console.log(quiz.questions)
+	console.log(quiz.questions);
 	nextQuestion(quiz);
 	// TODO: Add event listener for submit, and reset
-};
+}
 
-$(document).ready(function() {
-	$('.quiz-start-button').click(function() {
-		
-		startQuiz();
-	});
+$(function() {
+    $('.quiz-start-button').on('click', function() {
+        startQuiz();
+    });
 });
