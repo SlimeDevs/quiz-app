@@ -4,7 +4,7 @@ body {
 	width: 100%;
 }
 
-.quiz-questions, .quiz-answer, .quiz-final {
+.quiz-questions, .quiz-final {
 	display: none;
 }
 
@@ -17,7 +17,7 @@ h3 {
 	display: inline-block;
 }
 
-.quiz-welcome {
+.quiz-welcome, .quiz-final {
 	width: 50%;
 	margin: 100px auto;
 }
@@ -45,6 +45,11 @@ h3 {
 	max-width: 250px;
 }
 
+.quiz-final h3 {
+	display: block;
+	margin: 0.7em 0;
+}
+
 ol {
 	list-style-type: upper-alpha;
 }
@@ -54,7 +59,7 @@ ol {
 		font-size: 2.3em;
 	}
 
-	.quiz-welcome p {
+	.quiz-welcome p, .quiz-final p {
 		font-size: 1.1em;
 		max-width: 300px;
 	}

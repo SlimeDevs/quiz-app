@@ -7,7 +7,7 @@ class Quiz {
 
 	// Checks if a provided answer is correct, and increments score if it is
 	checkCorrect(answerID) {
-		const questionToCheck = this.questions[this.currentQuestion];
+		const questionToCheck = this.questions[this.currentQuestion - 1];
 		const questionIndex = answerID - 1;
 
 		if (questionToCheck.correctAnswerIndex === questionIndex) {
@@ -73,25 +73,38 @@ const quizQuestions = [
 
 let quiz = new Quiz;
 
+function showEnding() {
+	const incorrectQuestions = quiz.questions.length - quiz.score;
+	$('.final-correct').text('Questions Correct: ' + quiz.score);
+	$('.final-incorrect').text('Questions Incorrect: ' + incorrectQuestions);
+	$('.question-restart').on('click', function() {
+		console.log('Restart')
+	});
+	$('.quiz-questions').hide();
+	$('.quiz-final').show();
+}
+
 function nextQuestion(answer) {
-	
 	if (quiz.currentQuestion > 0) {
 		quiz.checkCorrect(answer)
 	}
 	quiz.currentQuestion++;
 	const currentQuestionNumber = quiz.currentQuestion;
 	const currentQuestion = quiz.questions[currentQuestionNumber - 1];
+	if (quiz.currentQuestion === 11) {
+		return showEnding();
+	}
 	const currentScore = quiz.score;
 	const totalQuestions = quiz.questions.length;
-	const answeredQuestions = totalQuestions - currentQuestionNumber - 1;
 	const questionChoicesSelector = $('.question-choices');
+	const questionAnswers = currentQuestion.answers;
 
 	$('.question-number').text(`Question: ${currentQuestionNumber}/${totalQuestions}`);
-	$('.question-correct').text(`Correct: ${currentScore}/${answeredQuestions}`);
+	$('.question-correct').text(`Correct: ${currentScore}/${currentQuestionNumber - 1}`);
 	$('.question-title').text(`${currentQuestion.text}`);
 	questionChoicesSelector.empty();
 	for (let i=0; i < currentQuestion.answers.length; i++) {
-		questionChoicesSelector.append(`<li>\n<input type="radio" name="user-answer" value="${i + 1}" required>\n<label>${i + 1}</label>\n</li>`)
+		questionChoicesSelector.append(`<li>\n<input type="radio" name="user-answer" value="${i + 1}" required>\n<label>${questionAnswers[i]}</label>\n</li>`)
 	}
 }
 
@@ -100,8 +113,12 @@ function startQuiz() {
 	$('.quiz-questions').show();
 	quiz.questions = JSON.parse(JSON.stringify(quizQuestions));
 	console.log(quiz.questions);
-	nextQuestion(quiz);
-	// TODO: Add event listener for submit, and reset
+	nextQuestion();
+	$('#question-form').on('submit', function(event) {
+		event.preventDefault();
+		let answerValue = $(".question-choices input[name='user-answer']:checked").val();
+		nextQuestion(answerValue);
+	})
 }
 
 $(function() {
