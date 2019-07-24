@@ -112,13 +112,16 @@ function startQuiz() {
 	$('.quiz-welcome').hide();
 	$('.quiz-questions').show();
 	quiz.questions = JSON.parse(JSON.stringify(quizQuestions));
-	console.log(quiz.questions);
 	nextQuestion();
 	$('#question-form').on('submit', function(event) {
 		event.preventDefault();
 		let answerValue = $(".question-choices input[name='user-answer']:checked").val();
 		nextQuestion(answerValue);
-	})
+	});
+
+	$('.restart').on('click', function() {
+		location.reload();
+	});
 }
 
 $(function() {
